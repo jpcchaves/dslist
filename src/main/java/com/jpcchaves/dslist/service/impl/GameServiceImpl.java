@@ -53,16 +53,7 @@ public class GameServiceImpl implements GameService {
                 .findById(id)
                 .orElseThrow(() -> new RuntimeException("Could not find game " + id));
 
-        game.setTitle(requestDto.getTitle());
-        game.setYear(requestDto.getYear());
-        game.setGenre(requestDto.getGenre());
-        game.setPlatforms(requestDto.getPlatforms());
-        game.setScore(requestDto.getScore());
-        game.setImgUrl(requestDto.getImgUrl());
-        game.setShortDescription(requestDto.getShortDescription());
-        game.setLongDescription(requestDto.getLongDescription());
-
-        Game updatedGame = repository.save(game);
+        Game updatedGame = repository.save(updateProperties(game, requestDto));
 
         GameMinDto gameMinDto = mapper.parseObject(updatedGame, GameMinDto.class);
 
@@ -71,11 +62,23 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public void delete(Long id) {
-        
+
         if (!repository.existsById(id)) {
             throw new RuntimeException("Could not find game " + id);
         }
 
         repository.deleteById(id);
+    }
+
+    private Game updateProperties(Game game, GameDto gameDto) {
+        game.setTitle(gameDto.getTitle());
+        game.setYear(gameDto.getYear());
+        game.setGenre(gameDto.getGenre());
+        game.setPlatforms(gameDto.getPlatforms());
+        game.setScore(gameDto.getScore());
+        game.setImgUrl(gameDto.getImgUrl());
+        game.setShortDescription(gameDto.getShortDescription());
+        game.setLongDescription(gameDto.getLongDescription());
+        return game;
     }
 }
