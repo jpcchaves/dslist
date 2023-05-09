@@ -1,3 +1,18 @@
+CREATE TABLE
+    `tb_game`
+(
+    `id`                bigint NOT NULL AUTO_INCREMENT,
+    `genre`             varchar(255) DEFAULT NULL,
+    `img_url`           varchar(255) DEFAULT NULL,
+    `long_description`  text,
+    `platforms`         varchar(255) DEFAULT NULL,
+    `score`             double       DEFAULT NULL,
+    `short_description` text,
+    `title`             varchar(255) DEFAULT NULL,
+    `game_year`         int          DEFAULT NULL,
+    PRIMARY KEY (`id`)
+);
+
 INSERT INTO tb_game
 (title, score, game_year, genre, platforms, img_url, short_description, long_description)
 VALUES ('Mass Effect Trilogy', 4.8, 2012, 'Role-playing (RPG), Shooter', 'XBox, Playstation, PC',
