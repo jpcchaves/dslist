@@ -7,6 +7,7 @@ import com.jpcchaves.dslist.repositories.GameRepository;
 import com.jpcchaves.dslist.service.GameService;
 import com.jpcchaves.dslist.utils.mapper.MapperUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -39,23 +40,24 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public GameMinDto getById(Long id) {
+    @Transactional(readOnly = true)
+    public GameDto getById(Long id) {
         Game game = repository
                 .findById(id)
                 .orElseThrow(() -> new RuntimeException("Could not find game " + id));
-        GameMinDto gameMinDto = mapper.parseObject(game, GameMinDto.class);
+        GameDto gameMinDto = mapper.parseObject(game, GameDto.class);
         return gameMinDto;
     }
 
     @Override
-    public GameMinDto update(Long id, GameDto requestDto) {
+    public GameDto update(Long id, GameDto requestDto) {
         Game game = repository
                 .findById(id)
                 .orElseThrow(() -> new RuntimeException("Could not find game " + id));
 
         Game updatedGame = repository.save(updateProperties(game, requestDto));
 
-        GameMinDto gameMinDto = mapper.parseObject(updatedGame, GameMinDto.class);
+        GameDto gameMinDto = mapper.parseObject(updatedGame, GameDto.class);
 
         return gameMinDto;
     }

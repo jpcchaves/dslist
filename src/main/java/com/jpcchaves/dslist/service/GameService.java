@@ -10,9 +10,9 @@ public interface GameService {
 
     List<GameMinDto> getAll();
 
-    GameMinDto getById(Long id);
+    GameDto getById(Long id);
 
-    GameMinDto update(Long id, GameDto requestDto);
+    GameDto update(Long id, GameDto requestDto);
 
     void delete(Long id);
 }
