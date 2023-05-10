@@ -3,6 +3,7 @@ package com.jpcchaves.dslist.service.impl;
 import com.jpcchaves.dslist.entities.Game;
 import com.jpcchaves.dslist.payload.dtos.game.GameDto;
 import com.jpcchaves.dslist.payload.dtos.game.GameMinDto;
+import com.jpcchaves.dslist.projections.GameMinProjection;
 import com.jpcchaves.dslist.repositories.GameRepository;
 import com.jpcchaves.dslist.service.GameService;
 import com.jpcchaves.dslist.utils.mapper.MapperUtils;
@@ -36,6 +37,13 @@ public class GameServiceImpl implements GameService {
     public List<GameMinDto> getAll() {
         List<Game> gameList = repository.findAll();
         List<GameMinDto> gameMinDtoList = mapper.parseListObjects(gameList, GameMinDto.class);
+        return gameMinDtoList;
+    }
+
+    @Override
+    public List<GameMinDto> getAllByList(Long id) {
+        List<GameMinProjection> gameMinProjections = repository.searchByList(id);
+        List<GameMinDto> gameMinDtoList = mapper.parseListObjects(gameMinProjections, GameMinDto.class);
         return gameMinDtoList;
     }
 

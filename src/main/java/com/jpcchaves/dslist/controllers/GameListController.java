@@ -1,6 +1,5 @@
 package com.jpcchaves.dslist.controllers;
 
-import com.jpcchaves.dslist.payload.dtos.game.GameDto;
 import com.jpcchaves.dslist.payload.dtos.game.GameMinDto;
 import com.jpcchaves.dslist.payload.dtos.gamelist.GameListDto;
 import com.jpcchaves.dslist.service.GameListService;
@@ -16,9 +15,11 @@ import java.util.List;
 public class GameListController {
 
     private final GameListService service;
+    private final GameService gameService;
 
-    public GameListController(GameListService service) {
+    public GameListController(GameListService service, GameService gameService) {
         this.service = service;
+        this.gameService = gameService;
     }
 
     @GetMapping
@@ -29,6 +30,11 @@ public class GameListController {
     @GetMapping("/{id}")
     public ResponseEntity<GameListDto> getById(@PathVariable("id") Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(service.getById(id));
+    }
+
+    @GetMapping("/{id}/games")
+    public ResponseEntity<List<GameMinDto>> getAllByList(@PathVariable("id") Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.getAllByList(id));
     }
 
     @PostMapping

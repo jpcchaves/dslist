@@ -10,6 +10,8 @@ public interface GameService {
 
     List<GameMinDto> getAll();
 
+    List<GameMinDto> getAllByList(Long id);
+
     GameDto getById(Long id);
 
     GameDto update(Long id, GameDto requestDto);
